@@ -11,7 +11,6 @@ export const useAuthUser = () => {
     const saveUser: TUser = {
       email: user.email,
       uid: user.uid,
-      accessToken: user.accessToken,
     };
     dispatch(login(saveUser));
   };
@@ -20,7 +19,6 @@ export const useAuthUser = () => {
     const saveUser: TUser = {
       email: user.email,
       uid: user.uid,
-      accessToken: user.accessToken,
     };
     dispatch(login(saveUser));
   };

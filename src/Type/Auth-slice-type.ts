@@ -1,8 +1,8 @@
 export interface IAuthState {
-    isAuthenticated: boolean;
-    user: {
-        id: string;
-        email: string;
-        name: string;
-    } | null;
+  isAuthenticated: boolean;
+  user: {
+    uid: string;
+    email: string;
+    accessToken?: string;
+  } | null;
 }

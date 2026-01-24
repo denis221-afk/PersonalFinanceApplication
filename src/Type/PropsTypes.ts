@@ -1,5 +1,5 @@
 export interface IAuthComponentProps {
-  mode?: string;
+  mode: string;
   title: string;
   LinkBtn: string;
 }

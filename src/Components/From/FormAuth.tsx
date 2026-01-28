@@ -6,13 +6,17 @@ import type { IAuthComponentProps } from "../../Type/PropsTypes";
 import { useForm } from "react-hook-form";
 import AuthFormErrorMasenge from "../ErrorMasenge/AuthFormErrorMasenge";
 import { useAuthUser } from "../../Hooks/useAuthUser";
+import Loading from "../Loading/Loading";
 const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { registerFn, loginFn } = useAuthUser();
+
   interface IFormInput {
     email: string;
     password: string;
   }
+
   const {
     register,
     handleSubmit,
@@ -21,18 +25,25 @@ const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
     mode: "onChange",
   });
 
-  function onSubmit(data: IFormInput) {
+  async function onSubmit(data: IFormInput) {
+    setIsLoading(true);
     if (mode === "login") {
-      loginFn(data.email, data.password);
+      await loginFn(data.email, data.password).finally(() =>
+        setIsLoading(false),
+      );
+      return;
     }
-    registerFn(data.email, data.password);
+    await registerFn(data.email, data.password).finally(() => {
+      setIsLoading(false);
+    });
   }
   return (
     <>
       <form
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-[560px]"
+        className="bg-white p-6 rounded-lg shadow-md w-full max-w-[560px] relative"
         onSubmit={handleSubmit(onSubmit)}
       >
+        {isLoading ? <Loading /> : null}
         <h2 className="text-xl font-bold mb-4">{title}</h2>
         <div className="mb-4">
           <label htmlFor="email" className="block text-gray-700 mb-2">
@@ -103,10 +114,11 @@ const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
           </div>
         </div>
         <button
+          disabled={isLoading}
           type="submit"
           className="w-full cursor-pointer bg-[#201f24] text-white py-2 rounded-md hover:bg-[#201f24dc] transition duration-300"
         >
-          Login
+          {mode === "login" ? "Login" : "Sign Up"}
         </button>
         <p className="mt-4">
           {mode === "login"

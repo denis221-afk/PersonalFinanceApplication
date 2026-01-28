@@ -4,11 +4,13 @@ import type { User } from "firebase/auth";
 import { auth } from "../Database/firebase";
 import { useDispatch } from "react-redux";
 import { login } from "../Store/auth-slice";
-
+import { useLoading } from "./useContextLoading";
 export const useAuthListenerChange = () => {
   const dispatch = useDispatch();
+  const { setIsLoading } = useLoading();
 
   useEffect(() => {
+    setIsLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
         const saveUser: { email: string | null; uid: string | null } = {
@@ -17,6 +19,7 @@ export const useAuthListenerChange = () => {
         };
         dispatch(login(saveUser));
       }
+      setIsLoading(false);
     });
 
     // cleanup: видаляє слухача при демаунті

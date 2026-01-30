@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { auth } from "../Database/firebase";
 import { useDispatch } from "react-redux";
-import { login } from "../Store/auth-slice";
+import { login } from "../Store/authSlice";
 import { useLoading } from "./useContextLoading";
 export const useAuthListenerChange = () => {
   const dispatch = useDispatch();

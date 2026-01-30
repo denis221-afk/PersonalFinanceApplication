@@ -2,20 +2,20 @@ import React from "react";
 import iconEye from "../../Assets/Icons/eye.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import type { IAuthComponentProps } from "../../Type/PropsTypes";
+import type { IAuthComponentProps } from "../../Type/propsTypes";
 import { useForm } from "react-hook-form";
-import AuthFormErrorMasenge from "../ErrorMasenge/AuthFormErrorMasenge";
+import AuthFormErrormessenge from "../ErrorMessage/AuthFormErrorMessage";
 import { useAuthUser } from "../../Hooks/useAuthUser";
 import Loading from "../Loading/Loading";
-const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { registerFn, loginFn } = useAuthUser();
+interface IFormInput {
+  email: string;
+  password: string;
+  displayName?: string;
+}
 
-  interface IFormInput {
-    email: string;
-    password: string;
-  }
+const FormAuth = ({ title, linkBtnText, mode }: IAuthComponentProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const { isLoading, heandleFn, messenge } = useAuthUser();
 
   const {
     register,
@@ -26,16 +26,9 @@ const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
   });
 
   async function onSubmit(data: IFormInput) {
-    setIsLoading(true);
-    if (mode === "login") {
-      await loginFn(data.email, data.password).finally(() =>
-        setIsLoading(false),
-      );
-      return;
-    }
-    await registerFn(data.email, data.password).finally(() => {
-      setIsLoading(false);
-    });
+    const { email, password } = data;
+    const displayName = data?.displayName || null;
+    heandleFn({ mode, email, password, displayName });
   }
   return (
     <>
@@ -49,7 +42,7 @@ const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
           <label htmlFor="email" className="block text-gray-700 mb-2">
             Email
             {errors.email && (
-              <AuthFormErrorMasenge message={errors.email.message} />
+              <AuthFormErrormessenge message={errors.email.message} />
             )}
           </label>
           <input
@@ -73,12 +66,39 @@ const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           />
         </div>
+
+        {mode === "signup" && (
+          <div className="mb-4">
+            <label htmlFor="displayName">
+              Full name
+              {errors.email && (
+                <AuthFormErrormessenge message={errors.email.message} />
+              )}
+            </label>
+            <input
+              {...register("displayName", {
+                required: "Name is required",
+                minLength: {
+                  value: 3,
+                  message: "Name must be at least 5 characters long",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Name must be at most 50 characters long",
+                },
+              })}
+              type="name"
+              id="name"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+            />
+          </div>
+        )}
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-700 mb-2">
             Password
           </label>
           {errors.password && (
-            <AuthFormErrorMasenge message={errors.password.message} />
+            <AuthFormErrormessenge message={errors.password.message} />
           )}
           <div className="relative w-full">
             <input
@@ -113,6 +133,8 @@ const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
             </button>
           </div>
         </div>
+        {messenge ? <AuthFormErrormessenge message={messenge} /> : null}
+
         <button
           disabled={isLoading}
           type="submit"
@@ -125,7 +147,7 @@ const FormAuth = ({ title, LinkBtn, mode }: IAuthComponentProps) => {
             ? "Don't have an account?"
             : "Already have an account?"}{" "}
           <Link
-            to={LinkBtn}
+            to={linkBtnText}
             className="text-gray-500 cursor-pointer hover:underline"
           >
             {mode === "login" ? "Sign Up" : "Login"}

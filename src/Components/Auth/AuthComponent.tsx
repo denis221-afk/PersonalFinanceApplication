@@ -1,10 +1,10 @@
 import React from "react";
-import HeaderMobile from "../Header/Header-moblle";
-import FormAuth from "../From/FormAuth";
+import HeaderMobile from "../Header/HeaderMobile";
+import FormAuth from "../Form/FormAuth";
 import LoginBg from "../../Assets/LoginBg.webp";
-import type { IAuthComponentProps } from "../../Type/PropsTypes";
+import type { IAuthComponentProps } from "../../Type/propsTypes";
 
-const AuthComponent = ({ mode, title, LinkBtn }: IAuthComponentProps) => {
+const AuthComponent = ({ mode, title, linkBtnText }: IAuthComponentProps) => {
   if (mode !== "login" && mode !== "signup") {
     throw new Error("Invalid mode prop. Expected 'login' or 'signup'.");
   }
@@ -19,7 +19,7 @@ const AuthComponent = ({ mode, title, LinkBtn }: IAuthComponentProps) => {
       </div>
       <div className="flex-1 flex w-full flex-col items-center h-dvh justify-center">
         <HeaderMobile />
-        <FormAuth title={title} LinkBtn={LinkBtn} mode={mode} />
+        <FormAuth title={title} linkBtnText={linkBtnText} mode={mode} />
       </div>
     </div>
   );

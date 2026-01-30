@@ -1,56 +1,44 @@
-import { registerUser } from "../Services/RegisterUser";
-import { loginUser } from "../Services/LoginUser";
 import { useDispatch } from "react-redux";
-import { login } from "../Store/auth-slice";
-import type { TUser } from "../Type/Type";
-
+import { login } from "../Store/authSlice";
+import type { AppDispatch } from "../Store";
+import { handleAuthUser } from "../Services/authServices";
+import { registerUser } from "../Services/registerUser";
+import { loginUser } from "../Services/loginUser";
+import { useState } from "react";
+import type { TUserInfo } from "../Type/Type";
 export const useAuthUser = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [messenge, setMessenge] = useState("");
 
-  const registerFn = async (email: string, password: string) => {
-    try {
-      const user: TUser = await registerUser(email, password);
+  async function heandleFn(userInfo: TUserInfo) {
+    const { mode, email, password } = userInfo;
+    const displayName = userInfo?.displayName || undefined;
+    setIsLoading(true);
+    const res =
+      mode === "login"
+        ? await handleAuthUser(loginUser, email, password).finally(() =>
+            setIsLoading(false),
+          )
+        : await handleAuthUser(
+            registerUser,
+            email,
+            password,
+            displayName,
+            
+          ).finally(() => setIsLoading(false));
 
-      const saveUser: TUser = {
-        email: user.email,
-        uid: user.uid,
-      };
-      dispatch(login(saveUser));
-    } catch (e) {
-      throw e;
+    if (res?.saveUser) {
+      console.log(res.saveUser);
+      dispatch(login(res.saveUser));
+    } else if (res?.messenge) {
+      setMessenge(res.messenge);
     }
-  };
+  }
 
-  const loginFn = async (email: string, password: string) => {
-    try {
-      const user: TUser = await loginUser(email, password);
-      const saveUser: TUser = {
-        email: user.email,
-        uid: user.uid,
-      };
-      dispatch(login(saveUser));
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+  return {
+    isLoading,
+    heandleFn,
+    messenge: messenge,
   };
-  return { registerFn, loginFn };
 };
-
-/* 
-- Яку логіку це сервіс має виконувати 
-получає - дані із сервера - формує обєкт користувача і повиртає сам обєкт і status 
-користувач водить дані email і password потім - 
-  1. показується загрузка 
-  2. Користувач потрабляє на головну сторінку 
-  // 
-  3. Користувач отримує повідомлиння про помилку 
-  4. Форма очищається
-
-  дані = email uid | помилка повідомлиння 
-
-  
-
-*/
-
-

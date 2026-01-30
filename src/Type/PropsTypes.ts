@@ -1,5 +1,7 @@
+import type { TAuthMode } from "./Type";
+
 export interface IAuthComponentProps {
-  mode: string;
+  mode: TAuthMode;
   title: string;
-  LinkBtn: string;
+  linkBtnText: string;
 }

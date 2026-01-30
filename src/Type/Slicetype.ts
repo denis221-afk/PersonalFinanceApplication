@@ -1,7 +1,8 @@
+import type { IUser } from "./Type";
+
+export interface IUserSlice extends IUser {}
+
 export interface IAuthState {
   isAuthenticated: boolean;
-  user: {
-    uid: string;
-    email: string | null;
-  } | null;
+  user: IUser | null;
 }

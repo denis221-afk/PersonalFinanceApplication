@@ -8,13 +8,13 @@ const AuthLayout = () => {
         <Route
           path="/*"
           element={
-            <AuthComponent mode="login" title="Login" LinkBtn="/signup" />
+            <AuthComponent mode="login" title="Login" linkBtnText="/signup" />
           }
         />
         <Route
           path="/signup"
           element={
-            <AuthComponent mode="signup" title="Sign Up" LinkBtn="/login" />
+            <AuthComponent mode="signup" title="Sign Up" linkBtnText="/login" />
           }
         />
       </Routes>

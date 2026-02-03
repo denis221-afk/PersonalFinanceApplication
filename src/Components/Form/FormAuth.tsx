@@ -26,9 +26,12 @@ const FormAuth = ({ title, linkBtnText, mode }: IAuthComponentProps) => {
   });
 
   async function onSubmit(data: IFormInput) {
-    const { email, password } = data;
-    const displayName = data?.displayName || null;
-    heandleFn({ mode, email, password, displayName });
+    const payload = {
+      email: data.email,
+      password: data.password,
+      displayName: data.displayName || null,
+    };
+    heandleFn({ mode, ...payload });
   }
   return (
     <>

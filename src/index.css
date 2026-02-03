@@ -16,3 +16,8 @@
 * {
   box-sizing: border-box;
 }
+
+.active {
+  filter: invert(39%) sepia(54%) saturate(2950%) hue-rotate(151deg)
+    brightness(92%) contrast(95%);
+}

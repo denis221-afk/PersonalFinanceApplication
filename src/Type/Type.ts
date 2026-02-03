@@ -24,7 +24,7 @@ export interface IFirebaseError extends Error {
 
 export interface IWallets {
   id: number;
-  uid: number;
+  userId: string;
   balance: number;
   name: string;
   currency: string;
@@ -40,9 +40,10 @@ export interface ITransactions {
   currency: string;
   note?: string;
   createdAt: number;
+  walletId: number;
 }
 
-export interface Budget {
+export interface IPots {
   id: string;
   userId: string;
   categoryId: string;
@@ -50,4 +51,17 @@ export interface Budget {
   spent: number;
   startDate: number;
   endDate: number;
+}
+
+export interface ISummary {
+  totalBalance: number | null | undefined;
+  income: number | null | undefined;
+  expense: number | null | undefined;
+  isEmpty?: boolean;
+}
+
+export interface ISummarySettings {
+  walletId: number | "all";
+  days: number;
+  enddata: number | "today";
 }

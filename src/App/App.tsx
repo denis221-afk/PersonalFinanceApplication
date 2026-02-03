@@ -7,12 +7,11 @@ import { useLoading } from "../Hooks/useContextLoading";
 import Loading from "../Components/Loading/Loading";
 function App() {
   const { isLoading } = useLoading();
-  // useAuthListenerChange();
+  useAuthListenerChange();
   const isAuthenticated: boolean = useAppSelector(
     (state) => state.auth.isAuthenticated,
   );
 
-  
   return (
     <BrowserRouter>
       {isLoading ? <Loading /> : null}

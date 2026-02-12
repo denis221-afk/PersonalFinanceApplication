@@ -1,10 +1,10 @@
 export const firebaseAuthErrors = {
-  "auth/invalid-credential": "Invalid email or password",
-  "auth/email-already-in-use": "This email is already registered",
-  "auth/invalid-email": "Invalid email format",
-  "auth/user-not-found": "User not found",
-  "auth/wrong-password": "Incorrect password",
-  "auth/weak-password": "Password is too weak (minimum 6 characters)",
-  "auth/too-many-requests": "Too many attempts. Please try again later",
-  "auth/e": "Something went wrong",
+  "auth/invalid-credential": "Невірна електронна пошта або пароль",
+  "auth/email-already-in-use": "Ця електронна пошта вже зареєстрована",
+  "auth/invalid-email": "Некоректний формат електронної пошти",
+  "auth/user-not-found": "Користувача не знайдено",
+  "auth/wrong-password": "Невірний пароль",
+  "auth/weak-password": "Пароль занадто слабкий (мінімум 6 символів)",
+  "auth/too-many-requests": "Забагато спроб. Спробуйте пізніше",
+  "auth/e": "Щось пішло не так",
 } as const;

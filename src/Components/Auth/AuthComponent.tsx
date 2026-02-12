@@ -1,7 +1,7 @@
 import React from "react";
 import HeaderMobile from "../Header/HeaderMobile";
 import FormAuth from "../Form/FormAuth";
-import LoginBg from "../../Assets/LoginBg.webp";
+import LoginBg from "../../Assets/LoginBg.png";
 import type { IAuthComponentProps } from "../../Type/propsTypes";
 
 const AuthComponent = ({ mode, title, linkBtnText }: IAuthComponentProps) => {

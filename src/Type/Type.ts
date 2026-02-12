@@ -1,9 +1,10 @@
 import { firebaseAuthErrors } from "../Database/errorMessage.data";
 export type TAuthMode = "login" | "signup";
 export type TDisplayName = string | null;
+export type TUserId = string;
 
 export interface IUser {
-  uid: string;
+  uid: TUserId;
   email: string | null;
   displayName?: TDisplayName;
   defaultCurrency?: string;
@@ -23,29 +24,29 @@ export interface IFirebaseError extends Error {
 }
 
 export interface IWallets {
-  id: number;
-  userId: string;
+  wid: number | string;
+  userId: TUserId;
   balance: number;
   name: string;
   currency: string;
+  transactions?: ITransactions[];
 }
 
 export interface ITransactions {
-  id: string;
-  userId: string;
-  accountId: string;
+  id: number | string;
+  userId: TUserId;
   categoryId: string;
   type: "income" | "expense";
   amount: number;
   currency: string;
   note?: string;
   createdAt: number;
-  walletId: number;
+  walletId: number | string;
 }
 
 export interface IPots {
   id: string;
-  userId: string;
+  userId: TUserId;
   categoryId: string;
   limit: number;
   spent: number;
@@ -64,4 +65,22 @@ export interface ISummarySettings {
   walletId: number | "all";
   days: number;
   enddata: number | "today";
+}
+
+export interface IBanks {
+  id: number;
+  uid: TUserId;
+  name: string;
+  targetAmount: number | null;
+  currencyAmout: number;
+  enddata?: string;
+  transactions: ITransactions[];
+  currency: string | "USD";
+  isCompleted: boolean;
+  color: string;
+}
+
+export interface IFormInputWailets {
+  name: string;
+  total: number;
 }

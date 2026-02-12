@@ -43,25 +43,25 @@ const FormAuth = ({ title, linkBtnText, mode }: IAuthComponentProps) => {
         <h2 className="text-xl font-bold mb-4">{title}</h2>
         <div className="mb-4">
           <label htmlFor="email" className="block text-gray-700 mb-2">
-            Email
+            Електронна пошта
             {errors.email && (
               <AuthFormErrormessenge message={errors.email.message} />
             )}
           </label>
           <input
             {...register("email", {
-              required: "Email is required",
+              required: "Електронна пошта обов’язкова",
               pattern: {
                 value: /^\S+@\S+$/i,
-                message: "Invalid email address",
+                message: "Некоректна електронна пошта",
               },
               minLength: {
                 value: 5,
-                message: "Email must be at least 5 characters long",
+                message: "Електронна пошта має містити щонайменше 5 символів",
               },
               maxLength: {
                 value: 50,
-                message: "Email must be at most 50 characters long",
+                message: "Електронна пошта не має перевищувати 50 символів ",
               },
             })}
             type="email"
@@ -73,21 +73,21 @@ const FormAuth = ({ title, linkBtnText, mode }: IAuthComponentProps) => {
         {mode === "signup" && (
           <div className="mb-4">
             <label htmlFor="displayName">
-              Full name
+              Повне імʼя
               {errors.email && (
-                <AuthFormErrormessenge message={errors.email.message} />
+                <AuthFormErrormessenge message={errors.displayName?.message} />
               )}
             </label>
             <input
               {...register("displayName", {
-                required: "Name is required",
+                required: "Ім’я обов’язкове",
                 minLength: {
                   value: 3,
-                  message: "Name must be at least 5 characters long",
+                  message: "Ім’я має містити щонайменше 3 символів",
                 },
                 maxLength: {
                   value: 50,
-                  message: "Name must be at most 50 characters long",
+                  message: "Ім’я не має перевищувати 50 символів",
                 },
               })}
               type="name"
@@ -98,7 +98,7 @@ const FormAuth = ({ title, linkBtnText, mode }: IAuthComponentProps) => {
         )}
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-700 mb-2">
-            Password
+            Пароль
           </label>
           {errors.password && (
             <AuthFormErrormessenge message={errors.password.message} />
@@ -106,19 +106,19 @@ const FormAuth = ({ title, linkBtnText, mode }: IAuthComponentProps) => {
           <div className="relative w-full">
             <input
               {...register("password", {
-                required: "Password is required",
+                required: "Пароль обов’язковий",
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                   message:
-                    "Password must be at least 8 characters long and contain at least one letter and one number",
+                    "Пароль має містити щонайменше 8 символів, включно з літерою та цифрою",
                 },
                 minLength: {
                   value: 8,
-                  message: "Password must be at least 8 characters long",
+                  message: "Пароль має містити щонайменше 8 символів",
                 },
                 maxLength: {
                   value: 20,
-                  message: "Password must be at most 20 characters long",
+                  message: "Пароль не має перевищувати 20 символів",
                 },
               })}
               type={showPassword ? "text" : "password"}
@@ -141,19 +141,17 @@ const FormAuth = ({ title, linkBtnText, mode }: IAuthComponentProps) => {
         <button
           disabled={isLoading}
           type="submit"
-          className="w-full cursor-pointer bg-[#201f24] text-white py-2 rounded-md hover:bg-[#201f24dc] transition duration-300"
+          className="w-full cursor-pointer bg-[#0F4F4A] text-white py-2 rounded-md hover:bg-[#1F8F7A] transition duration-300"
         >
-          {mode === "login" ? "Login" : "Sign Up"}
+          {mode === "login" ? "Увійти" : "Зареєструватися"}
         </button>
         <p className="mt-4">
-          {mode === "login"
-            ? "Don't have an account?"
-            : "Already have an account?"}{" "}
+          {mode === "login" ? "Ще не маєш акаунту?" : "Вже є акаунт?"}{" "}
           <Link
             to={linkBtnText}
             className="text-gray-500 cursor-pointer hover:underline"
           >
-            {mode === "login" ? "Sign Up" : "Login"}
+            {mode === "login" ? "Зареєструйся" : "Увійди"}
           </Link>
         </p>
       </form>

@@ -1,37 +1,46 @@
 import React from "react";
 import { useSummary } from "../../../Hooks/useSummary";
 import SummaryElemet from "./SummaryElemet";
+import Loading from "../../Loading/Loading";
 
 const SummaryWrapper = () => {
-  const { data, isLoading, error, massenge, isEmpty } = useSummary();
+  const { data, isLoading, error, isEmpty } = useSummary();
 
-  if (!data && !isEmpty) return <>{massenge}</>;
+  if (isLoading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Помилка завантаження</div>;
+  }
+
   return (
     <div className="flex flex-1 flex-col items-center  justify-between w-full md:flex-row">
       <SummaryElemet
         isLoading={isLoading}
         total={data?.totalBalance}
         error={error}
-        massenge={massenge}
         isEmpty={isEmpty}
-        name="Current balance"
+        name="Поточний баланс"
         active={true}
       />
       <SummaryElemet
         isLoading={isLoading}
         total={data?.income}
         error={error}
-        massenge={massenge}
         isEmpty={isEmpty}
-        name="Icome"
+        name="Дохід"
       />
       <SummaryElemet
         isLoading={isLoading}
         total={data?.expense}
         error={error}
-        massenge={massenge}
         isEmpty={isEmpty}
-        name="Expense"
+        name="Витрати"
       />
     </div>
   );

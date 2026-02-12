@@ -1,27 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import { filteredSummaryData } from "../Services/filteredSummaryData";
 import { Settings } from "../Api/SummarySettings";
+import { useAppSelector } from "../Store/hooksType";
 export const useSummary = () => {
-  const raw = localStorage.getItem("summarySetings");
-  let summarySetings = Settings;
-
-  try {
-    if (raw) summarySetings = JSON.parse(raw);
-  } catch {
-    summarySetings = Settings;
-  }
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["summary", summarySetings],
-    queryFn: () => filteredSummaryData(summarySetings),
+  const user = useAppSelector((state) => state.auth.user);
+  if (!user)
+    return {
+      data: null,
+      isLoading: false,
+      isError: "щось пішло не так",
+      error: "Eror 404 user",
+      isEmpty: false,
+    };
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["summary"],
+    queryFn: async () => {
+      const res = await filteredSummaryData(Settings, user?.uid);
+      return res;
+    },
+    enabled: !!user,
+    staleTime: 1000 * 60,
   });
 
-  if (!data) return { massenge: "Щось пішло не так", isLoading };
-  if (data.isEmpty)
-    return {
-      isEmpty: true,
-      data: null,
-      isLoading,
-      massenge: "Потрібно додати кошильок і транзакцій",
-    };
-  return { data, isLoading, error, isEmpty: false, massenge: "sucsses" };
+  return { data, isLoading, isError, error, isEmpty: data?.isEmpty ?? false };
 };

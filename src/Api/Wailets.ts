@@ -22,9 +22,16 @@ export const wallets: IWallets[] = [
     currency: "USD",
   },
   {
-    id: 4,
+    id: 3,
     userId: "bWJJJRTNH9RXWSxH7IvXac7Pi4H3",
-    balance: 7200.32,
+    balance: 300.21,
+    name: "Cash",
+    currency: "USD",
+  },
+  {
+    id: 3,
+    userId: "bWJJJRTNH9RXWSxH7IvXac7Pi4H3",
+    balance: 1300.21,
     name: "Cash",
     currency: "USD",
   },

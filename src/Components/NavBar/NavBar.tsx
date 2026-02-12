@@ -15,17 +15,17 @@ interface IItems {
 }
 
 const Items: IItems[] = [
-  { title: "Overview", icon: homeIcon, link: "/Overview", active: true },
+  { title: "Огляд", icon: homeIcon, link: "/Overview", active: true },
   {
-    title: "Transactions",
+    title: "Транзакції",
     icon: TransactionIcon,
     link: "/Transactions",
     active: false,
   },
-  { title: "Budgets", icon: BudgetIcon, link: "/Budgets", active: false },
-  { title: "Pots", icon: PotsIcon, link: "/Pots", active: false },
+  { title: "Бюджети", icon: BudgetIcon, link: "/wailets", active: false },
+  { title: "Кошики", icon: PotsIcon, link: "/Pots", active: false },
   {
-    title: "Recurring Bills",
+    title: "Регулярні платежі",
     icon: ReticIcon,
     link: "/Recurring",
     active: false,
@@ -59,7 +59,7 @@ const NavBar = () => {
     );
   });
   return (
-    <nav className="w-full h-16 py-3 bg-black fixed bottom-0 rounded-t-2xl shadow-2xl flex items-center justify-center md:w-75 md:static md:h-dvh md:rounded-none md:justify-start md:flex-col md:py-6 md:items-start ">
+    <nav className="w-full h-16 py-3 z-50 bg-[#0F4F4A] fixed bottom-0 rounded-t-2xl shadow-2xl flex items-center justify-center md:w-75 md:static md:h-dvh md:rounded-none md:justify-start md:flex-col md:py-6 md:items-start ">
       <img src={Logo} alt="Logo" className="mb-14 hidden md:block" />
       <ul className="flex justify-between w-10/12 md:flex-col md:items-start">
         {item}

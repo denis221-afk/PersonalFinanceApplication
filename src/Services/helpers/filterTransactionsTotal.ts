@@ -7,8 +7,5 @@ export const filterTransactionsTotal = (
 ) => {
   return transactions
     .filter((tr) => tr.createdAt > date && tr.type === type)
-    .reduce((acc, item) => {
-      acc += item.amount;
-      return acc;
-    }, 0);
+    .reduce((acc, item) => acc + Number(item.amount), 0);
 };

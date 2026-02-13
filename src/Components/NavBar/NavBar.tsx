@@ -19,7 +19,7 @@ const Items: IItems[] = [
   {
     title: "Транзакції",
     icon: TransactionIcon,
-    link: "/Transactions",
+    link: "/transaction",
     active: false,
   },
   { title: "Бюджети", icon: BudgetIcon, link: "/wailets", active: false },

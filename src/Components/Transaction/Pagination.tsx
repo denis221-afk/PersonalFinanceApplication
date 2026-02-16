@@ -6,7 +6,7 @@ const Pagination = () => {
       </button>
 
       <div className="flex gap-2">
-        {[1, 2, 3, 4, 5].map((page) => (
+        {[1, 2].map((page) => (
           <button
             key={page}
             className={`w-9 h-9 rounded-lg border ${

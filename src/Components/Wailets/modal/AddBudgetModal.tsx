@@ -88,7 +88,7 @@ export const AddBudgetModal = ({ onClose }: AddBudgetModalProps) => {
           />
         </div>
 
-        {/* Theme */}
+
 
         {/* Button */}
         <button

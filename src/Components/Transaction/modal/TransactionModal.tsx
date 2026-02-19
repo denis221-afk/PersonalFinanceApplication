@@ -3,6 +3,8 @@ import { getData } from "../../../Services/getData";
 import { useAppSelector } from "../../../Store/hooksType";
 import type { IWallets } from "../../../Type/Type";
 import { useForm } from "react-hook-form";
+import { useCreateTransaction } from "../../../Hooks/useCreateTransaction";
+
 interface IProps {
   onClose: () => void;
 }
@@ -14,6 +16,7 @@ interface IFormInput {
 }
 
 const TransactionModal = ({ onClose }: IProps) => {
+  const { handleCreateTransaction } = useCreateTransaction();
   const user = useAppSelector((state) => state.auth.user);
   if (!user) return;
   const { getWallets } = getData(user?.uid);
@@ -36,6 +39,8 @@ const TransactionModal = ({ onClose }: IProps) => {
 
   function onSubmit(data: IFormInput) {
     console.log(data);
+    handleCreateTransaction(data);
+    onClose();
   }
   return (
     <div className="rounded-2xl bg-white p-6 shadow-xl">
@@ -98,8 +103,8 @@ const TransactionModal = ({ onClose }: IProps) => {
             })}
             className="px-4 py-2 border border-[#0F4F4A] w-1/2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F4F4A]"
           >
-            <option value={"income"}>Витрати</option>
-            <option value={"expense"}>Доходи</option>
+            <option value={"expense"}>Витрати</option>
+            <option value={"income"}>Доходи</option>
           </select>
         </div>
         <div>

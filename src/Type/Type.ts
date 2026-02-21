@@ -12,11 +12,9 @@ export interface IUser {
 }
 
 // user for Auth
-export type TUserInfo = {
+export type TUserInfo = Pick<IUser, "email" | "displayName"> & {
   mode: TAuthMode;
-  email: string;
   password: string;
-  displayName?: TDisplayName;
 };
 
 export interface IFirebaseError extends Error {

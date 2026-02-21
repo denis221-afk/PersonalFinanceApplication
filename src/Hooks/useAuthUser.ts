@@ -13,6 +13,7 @@ export const useAuthUser = () => {
 
   async function heandleFn(userInfo: TUserInfo) {
     const { mode, email, password } = userInfo;
+    if (!email) return;
     const displayName = userInfo?.displayName || undefined;
     setIsLoading(true);
     const res =
@@ -25,7 +26,6 @@ export const useAuthUser = () => {
             email,
             password,
             displayName,
-            
           ).finally(() => setIsLoading(false));
 
     if (res?.saveUser) {

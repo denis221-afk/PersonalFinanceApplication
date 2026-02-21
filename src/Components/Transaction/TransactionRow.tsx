@@ -1,7 +1,10 @@
 import type { ITransactions } from "../../Type/Type";
 
 type Props = {
-  transaction: ITransactions;
+  transaction: Pick<
+    ITransactions,
+    "categoryId" | "createdAt" | "amount" | "type"
+  >;
 };
 
 const TransactionRow = ({ transaction }: Props) => {
@@ -19,10 +22,11 @@ const TransactionRow = ({ transaction }: Props) => {
 
       <span
         className={`text-right font-semibold ${
-          transaction.amount > 0 ? "text-teal-600" : "text-red-500"
+          transaction.type == "income" ? "text-teal-600" : "text-red-500"
         }`}
       >
-        {transaction.amount > 0 ? "+" : ""}${transaction.amount.toFixed(2)}
+        {transaction.type == "income" ? "+" : "-"}$
+        {transaction.amount.toFixed(2)}
       </span>
     </div>
   );

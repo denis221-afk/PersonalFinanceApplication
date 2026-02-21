@@ -18,9 +18,19 @@ const TransactionTable = ({ transactions }: Props) => {
           <span className="text-right">Amount</span>
         </div>
 
-        {transactions.map((tx) => (
-          <TransactionRow key={tx.id} transaction={tx} />
-        ))}
+        {transactions
+          .sort((a, b) => b.createdAt - a.createdAt)
+          .map((tx) => (
+            <TransactionRow
+              key={tx.id}
+              transaction={{
+                categoryId: tx.categoryId,
+                amount: tx.amount,
+                createdAt: tx.createdAt,
+                type: tx.type,
+              }}
+            />
+          ))}
       </div>
 
       {/* Mobile */}

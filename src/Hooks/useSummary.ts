@@ -9,7 +9,7 @@ export const useSummary = () => {
       data: null,
       isLoading: false,
       isError: "щось пішло не так",
-      error: "Eror 404 user",
+      error: new Error(),
       isEmpty: false,
     };
   const { data, isLoading, isError, error } = useQuery({

@@ -16,7 +16,6 @@ export const useCreateTransaction = () => {
   function handleCreateTransaction(data: CreateTransactionData) {
     if (!user) return;
     const transition = {
-      id: Math.random() * 2000,
       userId: user.uid,
       categoryId: data.name,
       type: data.type,
@@ -28,7 +27,10 @@ export const useCreateTransaction = () => {
     addTransaction(transition)
       .then(() => {
         const amount = data.type === "income" ? data.budget : -data.budget;
-        changeWailets(transition.walletId, amount);
+        changeWailets({
+          walletId: transition.walletId,
+          amount,
+        });
       })
       .then(() => {
         queryClient.invalidateQueries({ queryKey: ["summary"] });

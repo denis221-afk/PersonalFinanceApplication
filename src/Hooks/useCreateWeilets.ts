@@ -16,7 +16,8 @@ export const useCreateWeile = () => {
   });
 
   const transitionMutation = useMutation({
-    mutationFn: (transition: ITransactions) => addTransaction(transition),
+    mutationFn: (transition: Omit<ITransactions, "id">) =>
+      addTransaction(transition),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transaction"] });
     },
@@ -31,8 +32,7 @@ export const useCreateWeile = () => {
       name: data.name,
       currency: "ГРН",
     };
-    const transition: ITransactions = {
-      id: Math.random() * 2000,
+    const transition: Omit<ITransactions, "id"> = {
       userId: user.uid,
       categoryId: "поповниння кошилька",
       type: "income",

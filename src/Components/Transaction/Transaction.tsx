@@ -1,35 +1,20 @@
 import React, { useState } from "react";
-import type { ITransactions } from "../../Type/Type";
 import Filters from "./Filters";
 import TransactionTable from "./TransactionTable";
 import Pagination from "./Pagination";
 import ModalWrapper from "./modal/ModalWrapper";
-
-const transactions: ITransactions[] = [
-  {
-    id: 1,
-    categoryId: "General",
-    createdAt: Date.now(),
-    amount: 75.5,
-    walletId: 184.10464178189878,
-    userId: "bWJJJRTNH9RXWSxH7IvXac7Pi4H3",
-    type: "expense",
-    currency: "ГРН",
-  },
-  {
-    id: 2,
-    categoryId: "General",
-    createdAt: Date.now(),
-    amount: 75.5,
-    walletId: 184.10464178189878,
-    userId: "bWJJJRTNH9RXWSxH7IvXac7Pi4H3",
-    type: "income",
-    currency: "ГРН",
-  },
-];
+import { useGetTransactiontsts } from "../../Hooks/useGetTransaction";
 
 const Transactions = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
+  const { data } = useGetTransactiontsts();
+  const [currentPage, setCurrentPage] = useState(1);
+  if (!data) return "Щось пішло не так";
+  const activeShowItem = 6;
+  const startInddex = (currentPage - 1) * activeShowItem;
+  const endIndex = currentPage * activeShowItem;
+  const visibleItem = data.slice(startInddex, endIndex);
+  const totalPages = Math.ceil(data.length / activeShowItem);
 
   return (
     <div className="min-h-screen flex  flex-1 flex-col p-10">
@@ -50,9 +35,9 @@ const Transactions = () => {
       <div className="max-w-5xl w-full mx-auto bg-white rounded-2xl p-6 shadow-lg">
         <Filters />
 
-        <TransactionTable transactions={transactions} />
+        <TransactionTable transactions={visibleItem} />
 
-        <Pagination />
+        <Pagination totalPages={totalPages} currentPage={currentPage} />
       </div>
     </div>
   );

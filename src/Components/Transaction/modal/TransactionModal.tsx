@@ -4,6 +4,7 @@ import { useAppSelector } from "../../../Store/hooksType";
 import type { IWallets } from "../../../Type/Type";
 import { useForm } from "react-hook-form";
 import { useCreateTransaction } from "../../../Hooks/useCreateTransaction";
+import Loading from "../../Loading/Loading";
 
 interface IProps {
   onClose: () => void;
@@ -19,6 +20,7 @@ const TransactionModal = ({ onClose }: IProps) => {
   const { handleCreateTransaction } = useCreateTransaction();
   const user = useAppSelector((state) => state.auth.user);
   if (!user) return;
+
   const { getWallets } = getData(user?.uid);
   const [wallets, setWaillets] = useState<IWallets[] | null>(null);
   const {
@@ -36,12 +38,25 @@ const TransactionModal = ({ onClose }: IProps) => {
     }
     getFetch();
   }, []);
+  if (!wallets)
+    return (
+      <div className="rounded-2xl bg-white p-6 shadow-xl w-50 h-50">
+        <Loading />
+      </div>
+    );
 
   function onSubmit(data: IFormInput) {
     console.log(data);
     handleCreateTransaction(data);
     onClose();
   }
+  if (wallets && wallets.length === 0)
+    return (
+      <div className="rounded-2xl bg-white p-6 shadow-xl">
+        Щоб створити транзакцію треба додати кошильок
+      </div>
+    );
+
   return (
     <div className="rounded-2xl bg-white p-6 shadow-xl">
       <div className="mb-4 flex items-start justify-between">
